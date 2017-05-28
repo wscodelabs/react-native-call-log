@@ -16,6 +16,17 @@ Run `npm install --save react-native-call-log`
 + include ':react-native-call-log'
 + project(':react-native-call-log').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-call-log/android')
 ```
+
+* Edit your `android/app/build.gradle` (note: **app** folder) to look like this (exclude +)
+
+ ```diff
+dependencies 
+ + compile project(':react-native-call-log')
+    compile fileTree(dir: "libs", include: ["*.jar"])
+    compile "com.android.support:appcompat-v7:23.0.1"
+    compile "com.facebook.react:react-native:+"
+ ```
+
 * Edit your `MainApplication.java` from ( `android/app/src/main/java/...`) to look like this (exclude +)
 ```diff
 + import com.wscodelabs.callLogs.CallLogPackage;
