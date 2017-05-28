@@ -14,7 +14,13 @@
  
 ```
 
+
 ## Usage
+Add permission to `AndroidMenifest.xml `file 
+```
+ <uses-permission
+    android:name="android.permission.READ_CALL_LOG"></uses-permission>
+```
 
 ```
  import CallLogs from 'react-native-call-log'
