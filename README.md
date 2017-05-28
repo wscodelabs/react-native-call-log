@@ -3,13 +3,13 @@
 
 ## installation:
 
-```
+```javascript
  npm install --save react-native-call-log
  
 ```
 
 ## Option: Automatic
-```
+```javascript
  react-native link
  
 ```
@@ -17,11 +17,11 @@
 
 ## Usage
 Add permission to `AndroidMenifest.xml `file 
-```
+```xml
  <uses-permission android:name="android.permission.READ_CALL_LOG"></uses-permission>
 ```
 
-```
+```javascript
  import CallLogs from 'react-native-call-log'
  
  // fetch call logs data
