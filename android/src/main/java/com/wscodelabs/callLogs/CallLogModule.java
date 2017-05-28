@@ -31,7 +31,7 @@ public class CallLogModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-public void show( Callback booleanCallback) {
+public void show( Callback callBack) {
     
     StringBuffer stringBuffer = new StringBuffer();
     Cursor cursor = this.context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
@@ -79,6 +79,6 @@ public void show( Callback booleanCallback) {
         
     }
     cursor.close();
-    booleanCallback.invoke(callArray.toString());
+    callBack.invoke(callArray.toString());
 }
 }
