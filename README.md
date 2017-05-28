@@ -45,5 +45,11 @@ Add permission to `AndroidMenifest.xml `file
   */
  });
 ```
+## Example 
+```
+Clone or download the repository .. cd Example && npm install 
 
+```
+## Screenshot
+[![callrecord.jpg](https://s23.postimg.org/uxrtt72wb/callrecord.jpg)](https://postimg.org/image/st7gs419j/)
 
