@@ -18,8 +18,7 @@
 ## Usage
 Add permission to `AndroidMenifest.xml `file 
 ```
- <uses-permission
-    android:name="android.permission.READ_CALL_LOG"></uses-permission>
+ <uses-permission android:name="android.permission.READ_CALL_LOG"></uses-permission>
 ```
 
 ```
