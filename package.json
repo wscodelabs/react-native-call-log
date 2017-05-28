@@ -1,0 +1,12 @@
+{
+  "name": "react-native-call-log",
+  "version": "1.0.3",
+  "description": "fetch call log",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "author": "wscodelabs",
+  "license": "ISC"
+}
