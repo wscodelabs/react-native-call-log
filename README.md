@@ -30,7 +30,7 @@ Run `npm install --save react-native-call-log`
 ```
 
 ## Permission
-Add permission to `AndroidMenifest.xml `file 
+Add permission to `android/app/src/mainAndroidMenifest.xml `file 
 ```xml
  <uses-permission android:name="android.permission.READ_CALL_LOG"></uses-permission>
 ```
