@@ -7,7 +7,7 @@ import {
   View,
   FlatList
 } from 'react-native';
-import CallLog from 'react-native-android-calllog';
+import CallLog from 'react-native-call-log';
 
 export default class calllog extends Component {
   constructor(props) {
