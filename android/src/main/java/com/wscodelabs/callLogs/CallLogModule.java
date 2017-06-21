@@ -48,6 +48,7 @@ public void show( Callback callBack) {
         String callDate = cursor.getString(date);
         Date callDayTime = new Date(Long.valueOf(callDate));
         String callDuration = cursor.getString(duration);
+        String cachedName = cursor.getString(name);
         String dir = null;
         int dircode = Integer.parseInt(callType);
         switch (dircode) {
@@ -70,7 +71,8 @@ public void show( Callback callBack) {
             callObj.put("callDate", callDate);
             callObj.put("callDuration", callDuration);
             callObj.put("callDayTime", callDayTime);
-            callArray.put(callObj); 
+            callObj.put("cachedName", cachedName);
+            callArray.put(callObj);
         }
         catch(JSONException e){
             e.printStackTrace();
