@@ -36,6 +36,10 @@ public void show( Callback callBack) {
     StringBuffer stringBuffer = new StringBuffer();
     Cursor cursor = this.context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
             null, null, null, CallLog.Calls.DATE + " DESC");
+    if (cursor == null) {
+        callBack.invoke("[]");
+        return;
+    }
     int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
     int type = cursor.getColumnIndex(CallLog.Calls.TYPE);
     int date = cursor.getColumnIndex(CallLog.Calls.DATE);
