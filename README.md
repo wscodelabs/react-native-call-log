@@ -2,7 +2,7 @@
 
 
 ## Installation:
-Run `npm install --save react-native-call-log`
+Run `npm install --save https://github.com/wscodelabs/react-native-call-log`
  
 
 ### Android
