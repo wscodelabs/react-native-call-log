@@ -5,12 +5,8 @@ import android.provider.CallLog.Calls;
 import android.database.Cursor;
 import android.content.Context;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -71,7 +67,6 @@ public class CallLogModule extends ReactContextBaseJavaModule {
 
             WritableMap callLog = Arguments.createMap();
             callLog.putString("phoneNumber", phoneNumber);
-            callLog.putString("formattedPhoneNumber", formattedPhoneNumber);
             callLog.putInt("duration", duration);
             callLog.putString("name", name);
             callLog.putInt("timestamp", timestamp);
