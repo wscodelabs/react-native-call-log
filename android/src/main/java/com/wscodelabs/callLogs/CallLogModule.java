@@ -5,6 +5,7 @@ import android.provider.CallLog.Calls;
 import android.database.Cursor;
 import android.content.Context;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -61,7 +62,8 @@ public class CallLogModule extends ReactContextBaseJavaModule {
             String name = cursor.getString(NAME_COLUMN_INDEX);
 
             String timestampStr = cursor.getString(DATE_COLUMN_INDEX);
-            int timestamp = Integer.valueOf(timestampStr);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateTime = df.format(new Date(Long.valueOf(timestampStr)));
 
             String type = this.resolveCallType(cursor.getInt(TYPE_COLUMN_INDEX));
 
@@ -69,8 +71,8 @@ public class CallLogModule extends ReactContextBaseJavaModule {
             callLog.putString("phoneNumber", phoneNumber);
             callLog.putInt("duration", duration);
             callLog.putString("name", name);
-            callLog.putInt("timestamp", timestamp);
-            callLog.putString("timestampStr", timestampStr);
+            callLog.putString("timestamp", timestampStr);
+            callLog.putString("dateTime", dateTime);
             callLog.putString("type", type);
 
             result.pushMap(callLog);
