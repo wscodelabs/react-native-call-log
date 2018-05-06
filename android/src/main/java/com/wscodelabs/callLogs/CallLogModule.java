@@ -2,89 +2,105 @@ package com.wscodelabs.callLogs;
 
 import android.provider.CallLog;
 import android.provider.CallLog.Calls;
-import java.lang.StringBuffer;
 import android.database.Cursor;
-import java.util.Date;
 import android.content.Context;
-import org.json.*;
-import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.NativeModule;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-
-import java.util.Map;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
 
 public class CallLogModule extends ReactContextBaseJavaModule {
 
     private Context context;
 
-  public CallLogModule(ReactApplicationContext reactContext) {
-    super(reactContext);
-    this.context= reactContext;
-  }
-
-  @Override
-  public String getName() {
-    return "CallLogs";
-  }
-
-  @ReactMethod
-public void show( Callback callBack) {
-    
-    StringBuffer stringBuffer = new StringBuffer();
-    Cursor cursor = this.context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
-            null, null, null, CallLog.Calls.DATE + " DESC");
-    if (cursor == null) {
-        callBack.invoke("[]");
-        return;
+    public CallLogModule(ReactApplicationContext reactContext) {
+        super(reactContext);
+        this.context = reactContext;
     }
-    int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
-    int type = cursor.getColumnIndex(CallLog.Calls.TYPE);
-    int date = cursor.getColumnIndex(CallLog.Calls.DATE);
-    int duration = cursor.getColumnIndex(CallLog.Calls.DURATION);  
-    int name = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME);
-    JSONArray callArray = new JSONArray();
-    while (cursor.moveToNext()) {
-        String phNumber = cursor.getString(number);
-        String callType = cursor.getString(type);
-        String callDate = cursor.getString(date);
-        Date callDayTime = new Date(Long.valueOf(callDate));
-        String callDuration = cursor.getString(duration);
-        String cachedName = cursor.getString(name);
-        String dir = null;
-        int dircode = Integer.parseInt(callType);
-        switch (dircode) {
-        case CallLog.Calls.OUTGOING_TYPE:
-            dir = "OUTGOING";
-            break;
-        case CallLog.Calls.INCOMING_TYPE:
-            dir = "INCOMING";
-            break;
 
-        case CallLog.Calls.MISSED_TYPE:
-            dir = "MISSED";
-            break;
-        }
-
-        JSONObject callObj = new JSONObject();
-        try{
-            callObj.put("phoneNumber",phNumber);
-            callObj.put("callType", dir);
-            callObj.put("callDate", callDate);
-            callObj.put("callDuration", callDuration);
-            callObj.put("callDayTime", callDayTime);
-            callObj.put("cachedName", cachedName);
-            callArray.put(callObj);
-        }
-        catch(JSONException e){
-            e.printStackTrace();
-        }
-             
-        
+    @Override
+    public String getName() {
+        return "CallLogs";
     }
-    cursor.close();
-    callBack.invoke(callArray.toString());
+
+    @ReactMethod
+    public void loadAll(Promise promise) {
+        load(-1, promise);
+    }
+
+    @ReactMethod
+    public void load(int limit, Promise promise) {
+        Cursor cursor = this.context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
+                null, null, null, CallLog.Calls.DATE + " DESC");
+
+        WritableArray result = Arguments.createArray();
+
+        if (cursor == null) {
+            promise.resolve(result);
+            return;
+        }
+
+        int callLogCount = 0;
+
+        final int NUMBER_COLUMN_INDEX = cursor.getColumnIndex(Calls.NUMBER);
+        final int TYPE_COLUMN_INDEX = cursor.getColumnIndex(Calls.TYPE);
+        final int DATE_COLUMN_INDEX = cursor.getColumnIndex(Calls.DATE);
+        final int DURATION_COLUMN_INDEX = cursor.getColumnIndex(Calls.DURATION);
+        final int NAME_COLUMN_INDEX = cursor.getColumnIndex(Calls.CACHED_NAME);
+
+        while (cursor.moveToNext() && this.shouldContinue(limit, callLogCount++)) {
+            String phoneNumber = cursor.getString(NUMBER_COLUMN_INDEX);
+            int duration = cursor.getInt(DURATION_COLUMN_INDEX);
+            String name = cursor.getString(NAME_COLUMN_INDEX);
+            int timestamp = cursor.getInt(DATE_COLUMN_INDEX);
+
+            String dateTime  = SimpleDateFormat.getDateTimeInstance().format(new Date(timestamp));
+
+            String type = this.resolveCallType(cursor.getInt(TYPE_COLUMN_INDEX));
+
+            WritableMap callLog = Arguments.createMap();
+            callLog.putString("phoneNumber", phoneNumber);
+            callLog.putString("formattedPhoneNumber", formattedPhoneNumber);
+            callLog.putInt("duration", duration);
+            callLog.putString("name", name);
+            callLog.putInt("timestamp", timestamp);
+            callLog.putString("dateTime", dateTime);
+            callLog.putString("type", type);
+
+            result.pushMap(callLog);
+        }
+
+        cursor.close();
+
+        promise.resolve(result);
+    }
+
+    private String resolveCallType(int callTypeCode) {
+        switch (callTypeCode) {
+            case Calls.OUTGOING_TYPE:
+                return "OUTGOING";
+            case Calls.INCOMING_TYPE:
+                return "INCOMING";
+            case Calls.MISSED_TYPE:
+                return "MISSED";
+            default:
+                return "UNKNOWN";
+        }
+    }
+
+    private boolean shouldContinue(int limit, int count) {
+        return limit < 0 || count < limit;
+    }
 }
-}
+
