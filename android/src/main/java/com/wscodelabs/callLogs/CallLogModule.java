@@ -59,7 +59,7 @@ public class CallLogModule extends ReactContextBaseJavaModule {
             String phoneNumber = cursor.getString(NUMBER_COLUMN_INDEX);
             int duration = cursor.getInt(DURATION_COLUMN_INDEX);
             String name = cursor.getString(NAME_COLUMN_INDEX);
-            int timestamp = cursor.getInt(DATE_COLUMN_INDEX);
+            long timestamp = Long.valueOf(cursor.getString(DATE_COLUMN_INDEX));
 
             String dateTime  = SimpleDateFormat.getDateTimeInstance().format(new Date(timestamp));
 
@@ -69,7 +69,7 @@ public class CallLogModule extends ReactContextBaseJavaModule {
             callLog.putString("phoneNumber", phoneNumber);
             callLog.putInt("duration", duration);
             callLog.putString("name", name);
-            callLog.putInt("timestamp", timestamp);
+            callLog.putInt("timestamp", (int) timestamp);
             callLog.putString("dateTime", dateTime);
             callLog.putString("type", type);
 
