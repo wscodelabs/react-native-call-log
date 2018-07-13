@@ -1,3 +1,28 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# Random editor files
+.*.swp
+
+# expo
+.expo/
+
+# dependencies
+/node_modules
+
+# production
+/build
+/public/assets
+ios/build/
+
+# misc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Android Studio stuff
+local.properties
+
 # OSX
 #
 .DS_Store
@@ -46,8 +71,11 @@ buck-out/
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
 # screenshots whenever they are needed.
 # For more information about the recommended setup visit:
-# https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
+# https://docs.fastlane.tools/best-practices/source-control/
 
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots
+*/fastlane/report.xml
+*/fastlane/Preview.html
+*/fastlane/screenshots
+
+# Bundle artifact
+*.jsbundle
