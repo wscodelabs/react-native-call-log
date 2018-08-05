@@ -1,36 +1,11 @@
 {
-  "_from": "git+https://github.com/mikehardy/react-native-call-log.git",
-  "_id": "react-native-call-log@2.0.0",
-  "_inBundle": false,
-  "_integrity": "",
-  "_location": "/react-native-call-log",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "git",
-    "raw": "https://github.com/mikehardy/react-native-call-log.git",
-    "rawSpec": "https://github.com/mikehardy/react-native-call-log.git",
-    "saveSpec": "git+https://github.com/mikehardy/react-native-call-log.git",
-    "fetchSpec": "https://github.com/mikehardy/react-native-call-log.git",
-    "gitCommittish": null
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "git+https://github.com/mikehardy/react-native-call-log.git#903b1460cdf1923c0eaf2c78096a9bcb8244df11",
-  "_spec": "https://github.com/mikehardy/react-native-call-log.git",
-  "_where": "/Users/mike/work/Kullki/KScoreApp",
-  "author": {
-    "name": "wscodelabs"
-  },
-  "bundleDependencies": false,
-  "deprecated": false,
-  "description": "fetch call log",
-  "license": "ISC",
-  "main": "index.js",
   "name": "react-native-call-log",
+  "version": "2.1.0",
+  "description": "fetch call log",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "2.0.0"
+  "author": "wscodelabs",
+  "license": "ISC"
 }
