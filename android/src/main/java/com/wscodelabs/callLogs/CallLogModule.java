@@ -62,7 +62,8 @@ public class CallLogModule extends ReactContextBaseJavaModule {
             String name = cursor.getString(NAME_COLUMN_INDEX);
 
             String timestampStr = cursor.getString(DATE_COLUMN_INDEX);
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            DateFormat df = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.MEDIUM, SimpleDateFormat.MEDIUM);
+            //DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String dateTime = df.format(new Date(Long.valueOf(timestampStr)));
 
             String type = this.resolveCallType(cursor.getInt(TYPE_COLUMN_INDEX));
@@ -74,6 +75,7 @@ public class CallLogModule extends ReactContextBaseJavaModule {
             callLog.putString("timestamp", timestampStr);
             callLog.putString("dateTime", dateTime);
             callLog.putString("type", type);
+            callLog.putInt("rawType", cursor.getInt(TYPE_COLUMN_INDEX));
 
             result.pushMap(callLog);
         }
