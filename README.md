@@ -79,7 +79,8 @@ import CallLogs from 'react-native-call-log'
 Methods       | Description
 ------------- | -------------
 load(LIMIT)   | `LIMIT: number` get maximum number of call logs.  
-load()        | get all call logs 
+loadAll()        | get all call logs 
+
 ## Example 
 Clone or download the repository then Run `cd Example && npm install`
 
