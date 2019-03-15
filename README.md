@@ -2,7 +2,7 @@
 
 
 ## Installation:
-Run `npm install --save https://github.com/wscodelabs/react-native-call-log`
+Run `yarn add wscodelabs/react-native-call-log`
  
 
 ### Android
@@ -21,10 +21,7 @@ Run `npm install --save https://github.com/wscodelabs/react-native-call-log`
 
  ```diff
 dependencies {
- + compile project(':react-native-call-log')
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"
+ + implementation project(':react-native-call-log')
  }
  ```
 
@@ -44,36 +41,45 @@ dependencies {
 ## Permission
 Add permission to `android/app/src/mainAndroidMenifest.xml `file 
 ```xml
- <uses-permission android:name="android.permission.READ_CALL_LOG"></uses-permission>
+ <uses-permission android:name="android.permission.READ_CALL_LOG" />
 ```
 ## Usage
+
 ```javascript
- import CallLogs from 'react-native-call-log'
+import { PermissionsAndroid } from 'react-native';
+import CallLogs from 'react-native-call-log'
  
- // fetch call logs data
- 
- CallLogs.show((logs) =>{
-  // parse logs into json format
-   const parsedLogs = JSON.parse(logs);
-   
-  // logs data format
-  /*
-    [
-      { 
-        phoneNumber: '9889789797', 
-        callType: 'OUTGOING | INCOMING | MISSED',
-        callDate: timestamp,
-        callDuration: 'duration of call in sec',
-        callDayTime: Date()
-      },
-      .......
-     ]
-  */
- });
+ componentDidMount =  async() => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+        {
+          title: 'Call Log Example',
+          message:
+            'Access your call logs',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        }
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log(CallLogs);
+        CallLogs.load(5).then(c => console.log(c));
+      } else {
+        console.log('Call Log permission denied');
+      }
+    }
+    catch (e) {
+      console.log(e);
+    }
+   }
 ```
+
+## Methods 
+Methods       | Description
+------------- | -------------
+load(LIMIT)   | `LIMIT: number` get maximum number of call logs.  
+load()        | get all call logs 
 ## Example 
 Clone or download the repository then Run `cd Example && npm install`
-
-#### Screenshot
-[![callrecord.jpg](https://s23.postimg.org/uxrtt72wb/callrecord.jpg)](https://postimg.org/image/st7gs419j/)
 
