@@ -7,7 +7,7 @@ Run `yarn add wscodelabs/react-native-call-log`
 
 ### Android
 
-#### Option: Automatic(with `rnpm`)
+#### Option: Automatic
 `react-native link`
 #### Option: Manually
 * Edit your `android/settings.gradle` to look like this (exclude +)
