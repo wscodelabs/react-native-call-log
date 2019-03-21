@@ -2,7 +2,7 @@
 
 
 ## Installation:
-Run `yarn add wscodelabs/react-native-call-log`
+Run `yarn add react-native-call-log`
  
 
 ### Android
@@ -38,11 +38,6 @@ dependencies {
     }
 ```
 
-## Permission
-Add permission to `android/app/src/mainAndroidMenifest.xml `file 
-```xml
- <uses-permission android:name="android.permission.READ_CALL_LOG" />
-```
 ## Usage
 
 ```javascript
