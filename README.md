@@ -70,12 +70,31 @@ import CallLogs from 'react-native-call-log'
    }
 ```
 
-## Methods 
+## Methods
 Methods       | Description
 ------------- | -------------
-load(LIMIT)   | `LIMIT: number` get maximum number of call logs.  
-loadAll()        | get all call logs 
+`load(LIMIT)`   | `LIMIT: number` get maximum number of call logs.
+`load(limit, filter)` | `LIMIT: number` (use -1 for no limit)<br> `filter`: [see usage here](#filter)
+`loadAll()`        | get all call logs
 
-## Example 
+### Filter call logs
+```
+...
+/* List call logs matching the filter */
+const filter = {
+  minTimestamp: 1571835032,    // (Number or String) timestamp in milliseconds since UNIX epoch
+                               // if this filter is set, load() will only return call logs with timestamp >= minTimestamp
+
+  maxTimestamp: 1571835033,    // (Number or String) timestamp in milliseconds since UNIX epoch
+                               //
+                               // if this filter is set, load() will only return call logs with timestamp <= maxTimestamp
+
+  phoneNumbers: '+1234567890', // (String or an Array of Strings)
+                               // if this filter is set
+}
+
+const callLogs = await CallLogs.load(-1, filter) // applies filter with no limit (also works with a limit)
+...
+```
+## Example
 Clone or download the repository then Run `cd Example && npm install`
-
