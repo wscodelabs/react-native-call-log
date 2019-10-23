@@ -3,7 +3,7 @@
 
 ## Installation:
 Run `yarn add react-native-call-log`
- 
+
 
 ### Android
 
@@ -43,7 +43,7 @@ dependencies {
 ```javascript
 import { PermissionsAndroid } from 'react-native';
 import CallLogs from 'react-native-call-log'
- 
+
  componentDidMount =  async() => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -74,7 +74,7 @@ import CallLogs from 'react-native-call-log'
 Methods       | Description
 ------------- | -------------
 `load(LIMIT)`   | `LIMIT: number` get maximum number of call logs.
-`load(limit, filter)` | `LIMIT: number` (use -1 for no limit)<br> `filter`: [see usage here](#filter)
+`load(limit, filter)` | `LIMIT: number` (use -1 for no limit)<br> `filter`: [see usage here](#filter-call-logs))
 `loadAll()`        | get all call logs
 
 ### Filter call logs
