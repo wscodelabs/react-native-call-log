@@ -83,14 +83,14 @@ Methods       | Description
 /* List call logs matching the filter */
 const filter = {
   minTimestamp: 1571835032,    // (Number or String) timestamp in milliseconds since UNIX epoch
-                               // if this filter is set, load() will only return call logs with timestamp >= minTimestamp
+                               // if this filter is set, load(limit, filter) will only return call logs with timestamp >= minTimestamp
 
   maxTimestamp: 1571835033,    // (Number or String) timestamp in milliseconds since UNIX epoch
                                //
-                               // if this filter is set, load() will only return call logs with timestamp <= maxTimestamp
+                               // if this filter is set, load(limit, filter) will only return call logs with timestamp <= maxTimestamp
 
-  phoneNumbers: '+1234567890', // (String or an Array of Strings)
-                               // if this filter is set
+  phoneNumbers: '+1234567890', // (String or an Array of String)
+                               // if this filter is set, load(limit, filter) will only return call logs for this/these phone numbers
 }
 
 const callLogs = await CallLogs.load(-1, filter) // applies filter with no limit (also works with a limit)
