@@ -7,9 +7,14 @@ Run `yarn add react-native-call-log`
 
 ### Android
 
-#### Option: Automatic
-`react-native link`
-#### Option: Manually
+#### React Native 0.60+
+`auto links the module`
+#### React Native <= 0.59
+##### Auto
+`react-native link react-native-call-log`
+
+#### Manual
+
 * Edit your `android/settings.gradle` to look like this (exclude +)
 
 ```diff
@@ -44,30 +49,32 @@ dependencies {
 import { PermissionsAndroid } from 'react-native';
 import CallLogs from 'react-native-call-log'
 
- componentDidMount =  async() => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
-        {
-          title: 'Call Log Example',
-          message:
-            'Access your call logs',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
+ useEffect(() => {
+    (async () => {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+          {
+            title: 'Call Log Example',
+            message:
+              'Access your call logs',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          }
+        )
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+
+          CallLogs.load(-1, filter).then(c => console.log(c));
+        } else {
+          console.log('Call Log permission denied');
         }
-      )
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log(CallLogs);
-        CallLogs.load(5).then(c => console.log(c));
-      } else {
-        console.log('Call Log permission denied');
       }
-    }
-    catch (e) {
-      console.log(e);
-    }
-   }
+      catch (e) {
+        console.log(e);
+      }
+    })()
+  }, []);
 ```
 
 ## Methods
