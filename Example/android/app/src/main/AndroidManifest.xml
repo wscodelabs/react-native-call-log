@@ -1,9 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.calllog">
+  package="com.example">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_CALL_LOG"></uses-permission>
-
 
     <application
       android:name=".MainApplication"
