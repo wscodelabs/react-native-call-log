@@ -1,6 +1,6 @@
 {
   "name": "react-native-call-log",
-  "version": "2.2",
+  "version": "2.1.2",
   "description": "fetch call log",
   "main": "index.js",
   "scripts": {
