@@ -6,11 +6,17 @@
  * @flow
  */
 
-import React, {Component} from 'react';
+import React, { useEffect } from 'react';
 import { Platform, StyleSheet, Text, View, PermissionsAndroid } from 'react-native';
 
 import CallLogs from 'react-native-call-log';
 
+
+const filter = {
+  phoneNumbers: '+1234567',
+  minTimestamp: 1571835032,
+  maxTimestamp: 1583318721264,
+}
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -19,43 +25,42 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-export default class App extends Component {
+export function App() {
 
-  componentDidMount =  async() => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
-        {
-          title: 'Call Log Example',
-          message:
-            'Access your call logs',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
+  useEffect(() => {
+    (async () => {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+          {
+            title: 'Call Log Example',
+            message:
+              'Access your call logs',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          }
+        )
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+
+          CallLogs.load(-1, filter).then(c => console.log(c));
+        } else {
+          console.log('Call Log permission denied');
         }
-      )
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-
-        CallLogs.load(3).then(c => console.log(c));
-      } else {
-        console.log('Call Log permission denied');
       }
-    }
-    catch (e) {
-      console.log(e);
-    }
-    
-  }
-  
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
-  }
+      catch (e) {
+        console.log(e);
+      }
+    })()
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.welcome}>Welcome to React Native!</Text>
+      <Text style={styles.instructions}>To get started, edit App.js</Text>
+      <Text style={styles.instructions}>{instructions}</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
