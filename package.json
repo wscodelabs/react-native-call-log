@@ -3,6 +3,7 @@
   "version": "2.1.2",
   "description": "fetch call log",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
