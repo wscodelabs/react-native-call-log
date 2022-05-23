@@ -1,8 +1,20 @@
 declare namespace CallLogs {
+  export enum callType {
+    OUTGOING = 'OUTGOING',
+    INCOMING = 'INCOMING',
+    MISSED = 'MISSED',
+    VOICEMAIL = 'VOICEMAIL',
+    REJECTED = 'REJECTED',
+    BLOCKED = 'BLOCKED',
+    ANSWERED_EXTERNALLY = 'ANSWERED_EXTERNALLY',
+    UNKNOWN = 'UNKNOWN',
+  }
+
   export interface CallFilter {
     minTimestamp?: number;
     maxTimestamp?: number;
-    phoneNumbers?: string;
+    types?: CallType | CallType[];
+    phoneNumbers?: string | string[];
   }
 
   export interface CallLog {
@@ -11,7 +23,7 @@ declare namespace CallLogs {
     name: string;
     timestamp: string;
     dateTime: string;
-    type: 'OUTGOING' | 'INCOMING' | 'MISSED' | 'UNKNOWN';
+    type: CallType;
     rawType: number;
   }
 
