@@ -13,9 +13,10 @@ import CallLogs from 'react-native-call-log';
 
 
 const filter = {
-  phoneNumbers: '+1234567',
+  phoneNumbers: '+11234567890',
   minTimestamp: 1571835032,
   maxTimestamp: 1583318721264,
+  types: 'MISSED',
 }
 
 const instructions = Platform.select({

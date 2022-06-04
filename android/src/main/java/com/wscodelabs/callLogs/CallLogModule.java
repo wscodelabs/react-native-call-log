@@ -66,9 +66,13 @@ public class CallLogModule extends ReactContextBaseJavaModule {
             boolean nullFilter = filter == null;
             String minTimestamp = !nullFilter && filter.hasKey("minTimestamp") ? filter.getString("minTimestamp") : "0";
             String maxTimestamp = !nullFilter && filter.hasKey("maxTimestamp") ? filter.getString("maxTimestamp") : "-1";
+
+            String types = !nullFilter && filter.hasKey("types") ? filter.getString("types") : "[]";
+            JSONArray typesArray= new JSONArray(types);
+            Set<String> typeSet = new HashSet<>(Arrays.asList(toStringArray(typesArray)));
+
             String phoneNumbers = !nullFilter && filter.hasKey("phoneNumbers") ? filter.getString("phoneNumbers") : "[]";
             JSONArray phoneNumbersArray= new JSONArray(phoneNumbers);
-
             Set<String> phoneNumberSet = new HashSet<>(Arrays.asList(toStringArray(phoneNumbersArray)));
 
             int callLogCount = 0;
@@ -97,9 +101,10 @@ public class CallLogModule extends ReactContextBaseJavaModule {
                 String type = this.resolveCallType(cursor.getInt(TYPE_COLUMN_INDEX));
 
                 boolean passesPhoneFilter = phoneNumberSet == null || phoneNumberSet.isEmpty() || phoneNumberSet.contains(phoneNumber);
+                boolean passesTypeFilter = typeSet == null || typeSet.isEmpty() || typeSet.contains(type);
                 boolean passesMinTimestampFilter = minTimestamp == null || minTimestamp.equals("0") || Long.parseLong(timestampStr) >= Long.parseLong(minTimestamp);
                 boolean passesMaxTimestampFilter = maxTimestamp == null || maxTimestamp.equals("-1") || Long.parseLong(timestampStr) <= Long.parseLong(maxTimestamp);
-                boolean passesFilter = passesPhoneFilter&& passesMinTimestampFilter && passesMaxTimestampFilter;
+                boolean passesFilter = passesPhoneFilter && passesTypeFilter && passesMinTimestampFilter && passesMaxTimestampFilter;
 
                 if (passesFilter) {
                     WritableMap callLog = Arguments.createMap();
@@ -142,6 +147,14 @@ public class CallLogModule extends ReactContextBaseJavaModule {
                 return "INCOMING";
             case Calls.MISSED_TYPE:
                 return "MISSED";
+            case Calls.VOICEMAIL_TYPE:
+                return "VOICEMAIL";
+            case Calls.REJECTED_TYPE:
+                return "REJECTED";
+            case Calls.BLOCKED_TYPE:
+                return "BLOCKED";
+            case Calls.ANSWERED_EXTERNALLY_TYPE:
+                return "ANSWERED_EXTERNALLY";
             default:
                 return "UNKNOWN";
         }

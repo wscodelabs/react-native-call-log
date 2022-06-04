@@ -98,6 +98,9 @@ const filter = {
 
   phoneNumbers: '+1234567890', // (String or an Array of String)
                                // if this filter is set, load(limit, filter) will only return call logs for this/these phone numbers
+
+  types: 'MISSED',             // (Single value / Array of Strings / CallType enums)
+                               // if this filter is set, load(limit, filter) will only return call logs of a specific type
 }
 
 const callLogs = await CallLogs.load(-1, filter) // applies filter with no limit (also works with a limit)
