@@ -115,6 +115,7 @@ public class CallLogModule extends ReactContextBaseJavaModule {
                     callLog.putString("dateTime", dateTime);
                     callLog.putString("type", type);
                     callLog.putInt("rawType", cursor.getInt(TYPE_COLUMN_INDEX));
+                    callLog.putString("newField", "Hello");
                     result.pushMap(callLog);
                     callLogCount++;
                 }
